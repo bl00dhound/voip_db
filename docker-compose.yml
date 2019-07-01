@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: voip
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./00_voip_dump.sql:/docker-entrypoint-initdb.d/00_voip_dump.sql
+      - ./10_partition.sql:/docker-entrypoint-initdb.d/10_partition.sql
+      - ./20_to_innodb.sql:/docker-entrypoint-initdb.d/20_to_innodb.sql
+      - ./30_fkeys.sql:/docker-entrypoint-initdb.d/30_fkeys.sql
